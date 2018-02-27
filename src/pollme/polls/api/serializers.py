@@ -1,14 +1,19 @@
+"""
+serializers.py
+Lawrence Thompson
+02/27/2018
+Takes the Model data, serializes it, which then gets used by views.
+"""
+
+# imports the ModelSerializer and SerializerMethodField
 from rest_framework.serializers import (
     ModelSerializer,
     SerializerMethodField
 )
 
+#import models from higher package.
 from ..models import Question, Choice
 
-# class ChoiceSerializer(ModelSerializer):
-#     class Meta:
-#         model = Choice
-#         fields = ('question', 'choice_text', 'votes')
 
 class QuestionListSerializer(ModelSerializer):
     """
@@ -27,14 +32,18 @@ class QuestionListSerializer(ModelSerializer):
         fields = ['text', 'id', 'pub_date', 'choices']
 
     def get_choices(self, object):
+        """
+        Get choices for the choices field by builtins and get_<field>.
+        object - a question being passed in.
+        Returns .data as a Python native datatype with all related objects in.
+        """
         check_choices = object.choice_set.all()
         return ChoiceSerializer(check_choices, many=True).data
 
 class ChoiceSerializer(ModelSerializer):
     """
-    This serializes the Choice model
+    This serializes the Choice model. Many-to-one with Question.
     """
-    #what do i want to do
     class Meta:
         model = Choice
         fields = ['question', 'choice_text', 'votes']

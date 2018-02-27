@@ -1,3 +1,12 @@
+"""
+views.py
+Lawrence Thompson
+02/27/18
+The views API that intakes the serialized data and then uses 
+    class based generics to post API data to polls/api.
+"""
+
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
@@ -11,6 +20,10 @@ from .serializers import (
 )
 
 class QuestionListAPIView(generics.ListCreateAPIView):
+    """
+    Returns generic functions based off data from a 
+    serialized class that are to be seen in localhost.
+    """
     queryset = Question.objects.all()
     serializer_class = QuestionListSerializer
 
@@ -22,9 +35,9 @@ class QuestionListAPIView(generics.ListCreateAPIView):
     #     """
     #     pass
 
-    # def post(self, request, format=None):
-    #     """nothing required for lab 5"""
-    #     pass
+    def post(self, request, format=None):
+        """nothing required for lab 5"""
+        pass
 
     def put(self, request, format=None):
         """nothing required for lab 5"""
